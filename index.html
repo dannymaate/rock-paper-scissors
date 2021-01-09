@@ -3,7 +3,22 @@
 
 <head>
     <title>Rock Paper Scissors</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet">
 </head>
+<style>
+    body {
+        background-color: #6495ED;
+        font-family: 'Potta One', cursive;
+    }
+
+    h1 {
+        color: white;
+        text-align: center;
+        padding-top: 50px;
+        letter-spacing: 2px;
+    }
+</style>
 
 <body>
     <h1>Rock Paper Scissors</h1>
@@ -15,41 +30,78 @@
             return (randomComputerMove, computerMoves[randomComputerMove]);
         }
 
+        var computerScore = 0;
+        var playerScore = 0;
+
+        function game() {
+            computerScore = 0;
+            playerScore = 0;
+            for (i = 0; i <= 5; i++) {
+                playRound();
+                console.log("Round " + i + " of 5")
+                console.log(playerScore + "-" + computerScore);
+
+                while (i == 5) {
+                    if (playerScore > computerScore) {
+                        return "Humans win!";
+                    }
+
+                    else if (computerScore > playerScore) {
+                        return "Machines win!";
+                    }
+
+                    else {
+                        return "Drawn series!";
+                    }
+                }
+
+            }
+
+        }
+
         function playRound(playerSelection, computerSelection) {
-            var caseSensitivePlayerSelection = prompt("Enter your move: ");
-            playerSelection = caseSensitivePlayerSelection.toLowerCase();
             var computerSelection = computerPlay();
+            var playerSelection = prompt("Enter your move: ").toLowerCase();
+
 
             if (playerSelection == "rock" && computerSelection == "scissors") {
+                playerScore++;
                 return "You win! Rock beats scissors";
             }
 
             else if (playerSelection == "rock" && computerSelection == "paper") {
+                computerScore++;
                 return "You lose! Paper beats rock";
             }
 
             else if (playerSelection == "scissors" && computerSelection == "rock") {
+                computerScore++;
                 return "You lose! Rock beats scissors";
             }
 
             else if (playerSelection == "scissors" && computerSelection == "paper") {
+                playerScore++;
                 return "You win! Scissors beats paper";
             }
 
             else if (playerSelection == "paper" && computerSelection == "scissors") {
+                computerScore++;
                 return "You lose! Scissors beats paper";
             }
 
             else if (playerSelection == "paper" && computerSelection == "rock") {
-                return "You lose! Paper beats rock";
+                playerScore++;
+                return "You win! Paper beats rock";
             }
 
             else {
+                playerScore++;
+                computerScore++;
                 return "Draw!"
             }
-
-
         }
+
+
 
     </script>
 </body>
