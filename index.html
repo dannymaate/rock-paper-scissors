@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Rock Paper Scissors</title>
+</head>
+
+<body>
+    <h1>Rock Paper Scissors</h1>
+    <script>
+        function computerPlay() {
+            const computerMoves = ['rock', 'paper', 'scissors']
+            const randomComputerMove = Math.floor(Math.random() * computerMoves.length);
+
+            return (randomComputerMove, computerMoves[randomComputerMove]);
+        }
+
+        function playRound(playerSelection, computerSelection) {
+            var caseSensitivePlayerSelection = prompt("Enter your move: ");
+            playerSelection = caseSensitivePlayerSelection.toLowerCase();
+            var computerSelection = computerPlay();
+
+            if (playerSelection == "rock" && computerSelection == "scissors") {
+                return "You win! Rock beats scissors";
+            }
+
+            else if (playerSelection == "rock" && computerSelection == "paper") {
+                return "You lose! Paper beats rock";
+            }
+
+            else if (playerSelection == "scissors" && computerSelection == "rock") {
+                return "You lose! Rock beats scissors";
+            }
+
+            else if (playerSelection == "scissors" && computerSelection == "paper") {
+                return "You win! Scissors beats paper";
+            }
+
+            else if (playerSelection == "paper" && computerSelection == "scissors") {
+                return "You lose! Scissors beats paper";
+            }
+
+            else if (playerSelection == "paper" && computerSelection == "rock") {
+                return "You lose! Paper beats rock";
+            }
+
+            else {
+                return "Draw!"
+            }
+
+
+        }
+
+    </script>
+</body>
+
+</html>
