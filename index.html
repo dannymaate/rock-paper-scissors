@@ -12,26 +12,126 @@
         font-family: 'Potta One', cursive;
     }
 
-    h1 {
-        color: white;
+    h1,
+    h2 {
+        color: #FCAD52;
         text-align: center;
+    }
+
+    h1 {
         padding-top: 50px;
         letter-spacing: 2px;
+        font-size: 50px;
+    }
+
+    h2 {
+        padding-top: 25px;
+        letter-spacing: 5px;
+        font-size: 30px;
+    }
+
+    .fa-hand-rock,
+    .fa-paper-plane,
+    .fa-cut {
+        font-size: 130px;
+        padding: 50px;
+        text-align: center;
+        color: #0C2044;
+    }
+
+    .playerSelection {
+        text-align: center;
+        padding-top: 40px;
     }
 </style>
 
 <body>
     <h1>Rock Paper Scissors</h1>
+    <h2>Man v Machine</h2>
+    <div class="playerSelection">
+        <button id="rock-btn" type="button"><i class="fas fa-hand-rock" id="rock"></i></button>
+        <button id="paper-btn" type="button"><i class="fas fa-paper-plane" id="paper"></i></button>
+        <button id="scissors-btn" type="button"><i class="fas fa-cut" id="scissors"></i></button>
+    </div>
+
+    <script src="https://kit.fontawesome.com/b1ad3c15f0.js" crossorigin="anonymous"></script>
     <script>
         function computerPlay() {
             const computerMoves = ['rock', 'paper', 'scissors']
             const randomComputerMove = Math.floor(Math.random() * computerMoves.length);
-
             return (randomComputerMove, computerMoves[randomComputerMove]);
         }
 
+
+        var computerSelection = computerPlay();
         var computerScore = 0;
         var playerScore = 0;
+
+        document.getElementById("rock-btn").addEventListener('click', playRound);
+
+
+        {
+
+            if (computerSelection == "scissors") {
+                playerScore++;
+                return "You win! Rock beats scissors";
+            }
+            else if (computerSelection == "paper") {
+                computerScore++;
+                return "You lose! Paper beats rock";
+            }
+            else {
+                playerScore++;
+                computerScore++;
+                return "Draw!"
+            }
+            console.log("You've reached rock!")
+        });
+
+        function playRound(playerSelection, computerSelection) {
+
+            const rock = document.getElementById("rock");
+            const paper = document.getElementById("paper");
+            const scissors = document.getElementById("scissors");
+
+
+            document.getElementById("paper-btn").addEventListener('click', function paperSelection() {
+                if (computerSelection == "rock") {
+                    playerScore++;
+                    return "You win! Paper beats rock";
+                }
+                else if (computerSelection == "scissors") {
+                    computerScore++;
+                    return "You lose! Scissors beats paper";
+                }
+                else {
+                    playerScore++;
+                    computerScore++;
+                    return "Draw!"
+                }
+                console.log("You've reached paper!")
+            });
+
+            document.getElementById("scissors-btn").addEventListener('click', function scissorsSelection() {
+                if (computerSelection == "paper") {
+                    playerScore++;
+                    return "You win! Scissors beats paper";
+                }
+                else if (computerSelection == "rock") {
+                    computerScore++;
+                    return "You lose! Rock beats scissors";
+                }
+                else {
+                    playerScore++;
+                    computerScore++;
+                    return "Draw!"
+                }
+                console.log("You've reached scissors!")
+            });
+        }
+        const playerSelection = "rock";
+        const computerSelection = computerPlay();
+        console.log(playRound(playerSelection, computerSelection));
 
         function game() {
             computerScore = 0;
@@ -54,54 +154,8 @@
                         return "Drawn series!";
                     }
                 }
-
-            }
-
-        }
-
-        function playRound(playerSelection, computerSelection) {
-            var computerSelection = computerPlay();
-            var playerSelection = prompt("Enter your move: ").toLowerCase();
-
-
-            if (playerSelection == "rock" && computerSelection == "scissors") {
-                playerScore++;
-                return "You win! Rock beats scissors";
-            }
-
-            else if (playerSelection == "rock" && computerSelection == "paper") {
-                computerScore++;
-                return "You lose! Paper beats rock";
-            }
-
-            else if (playerSelection == "scissors" && computerSelection == "rock") {
-                computerScore++;
-                return "You lose! Rock beats scissors";
-            }
-
-            else if (playerSelection == "scissors" && computerSelection == "paper") {
-                playerScore++;
-                return "You win! Scissors beats paper";
-            }
-
-            else if (playerSelection == "paper" && computerSelection == "scissors") {
-                computerScore++;
-                return "You lose! Scissors beats paper";
-            }
-
-            else if (playerSelection == "paper" && computerSelection == "rock") {
-                playerScore++;
-                return "You win! Paper beats rock";
-            }
-
-            else {
-                playerScore++;
-                computerScore++;
-                return "Draw!"
             }
         }
-
-
 
     </script>
 </body>
