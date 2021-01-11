@@ -21,14 +21,29 @@
 
     #result,
     #game,
-    #round {
+    #round,
+    #score {
         text-align: center;
         font-family: 'East Sea Dokdo', cursive;
         font-size: 35px;
+        margin: 0;
+    }
+
+    #score {
+        color: #ffffff;
+        padding: 10px;
+    }
+
+    #round {
+        font-size: 50px;
+        padding: 10px;
     }
 
     #game {
         font-size: 50px;
+        color: #FCAD52;
+        letter-spacing: 5px;
+        background-color: #0C2044;
     }
 
     h1,
@@ -41,6 +56,7 @@
         letter-spacing: 2px;
         font-size: 85px;
         margin-bottom: 5px;
+        margin-top: 15px;
     }
 
     h2 {
@@ -78,6 +94,9 @@
     <div id="round-text">
         <p id="round"></p>
     </div>
+    <div id="score-text">
+        <p id="score"></p>
+    </div>
     <div id="text">
         <p id="result"></p>
     </div>
@@ -92,35 +111,50 @@
         const rock = document.getElementById("rock");
         const paper = document.getElementById("paper");
         const scissors = document.getElementById("scissors");
+        var computerScore = 0;
+        var playerScore = 0;
+        var roundCount = 0;
 
         function computerPlay() {
             const computerMoves = ['rock', 'paper', 'scissors']
             const randomComputerMove = Math.floor(Math.random() * computerMoves.length);
-            return (randomComputerMove, computerMoves[randomComputerMove]);
+            return computerMoves[randomComputerMove];
+
+            var min = 1;
+            var max = 3;
+            if (lastRandom === undefined) {
+                random = Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+            else {
+                random = Math.floor(Math.random() * (max - min)) + min;
+                if (randomComputerMove >= lastRandom) random += 1;
+            }
+            lastRandom = random;
         }
 
 
 
-        var computerScore = 0;
-        var playerScore = 0;
 
 
-        document.getElementById("rock-btn").addEventListener('click', () => {
+
+        document.getElementById("rock-btn").addEventListener("click", () => {
             rockSelection();
             game();
+
         });
 
         function rockSelection() {
+            roundCount++;
 
             if (computerSelection == "scissors") {
                 playerScore++;
                 return document.getElementById('result').innerHTML = "You win! Rock beats scissors";
             }
-            else if (computerSelection == "paper") {
+            if (computerSelection == "paper") {
                 computerScore++;
                 return document.getElementById('result').innerHTML = "You lose! Paper beats rock";
             }
-            else {
+            if (computerSelection == "rock") {
                 playerScore++;
                 computerScore++;
                 return document.getElementById('result').innerHTML = "Draw";
@@ -133,6 +167,7 @@
         });
 
         function paperSelection() {
+            roundCount++;
             if (computerSelection == "rock") {
                 playerScore++;
                 return document.getElementById('result').innerHTML = "You win! Paper beats rock";
@@ -155,17 +190,18 @@
         });
 
         function scissorsSelection() {
+            roundCount++;
             if (computerSelection == "paper") {
                 playerScore++;
                 console.log("Score change");
                 console.log(playerScore);
-                return document.getElementById('result').innerHTML = "You win! Scissors beats paper";
+                document.getElementById('result').innerHTML = "You win! Scissors beats paper";
             }
             else if (computerSelection == "rock") {
                 computerScore++;
                 console.log("Score change");
                 console.log(computerScore);
-                return document.getElementById('result').innerHTML = "You lose! Rock beats scissors";
+                document.getElementById('result').innerHTML = "You lose! Rock beats scissors";
             }
             else {
                 playerScore++;
@@ -173,7 +209,7 @@
                 console.log("Score change");
                 console.log(computerScore);
                 console.log(playRound());
-                return document.getElementById('result').innerHTML = "Draw!"
+                document.getElementById('result').innerHTML = "Draw!"
             }
         }
 
@@ -181,16 +217,18 @@
         }
 
 
+
+
         function game() {
             //Function just console logs then goes straight to 5. Need to involve the selection functions to slow this loop down
 
-            for (i = 0; i <= 5; i++) {
-                document.getElementById('round').innerHTML = "Round " + i + " of 5";
-
-                console.log(playerScore + "-" + computerScore);
+            for (i = 0; i < 5; i++) {
+                var displayMsg = "Round " + roundCount + " of 5";
+                document.getElementById('score').innerHTML = playerScore + " - " + computerScore;
+                document.getElementById('round').innerHTML = displayMsg;
             }
 
-            if (playerScore >= 5 || computerScore >= 5) {
+            if (roundCount == 5) {
                 if (playerScore > computerScore) {
                     return document.getElementById('game').innerHTML = "Humans win!";
                 }
@@ -204,6 +242,14 @@
                 }
 
             }
+
+        }
+
+        //Reset the game after 5 rounds
+        function resetGame() {
+            roundCount = 0;
+            playerScore = 0;
+            computerScore = 0;
         }
 
     </script>
